@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:store_api_flutter_course/consts/global_colors.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:store_api_flutter_course/screens/product_details_screen.dart';
 
 class FeedWidget extends StatelessWidget {
   const FeedWidget({super.key});
@@ -17,7 +19,15 @@ class FeedWidget extends StatelessWidget {
         color: Theme.of(context).cardColor,
         child: InkWell(
           borderRadius: BorderRadius.circular(8.0),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              PageTransition(
+                  type: PageTransitionType.bottomToTop,
+                  duration: const Duration(milliseconds: 300),
+                  child: const ProductDetails()),
+            );
+          },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

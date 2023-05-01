@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:store_api_flutter_course/consts/global_colors.dart';
+import 'package:store_api_flutter_course/screens/feeds_screen.dart';
 import 'package:store_api_flutter_course/widgets/appbar_icons.dart';
 import 'package:store_api_flutter_course/widgets/feeds_widget.dart';
 import 'package:store_api_flutter_course/widgets/sale_widget.dart';
+import 'package:page_transition/page_transition.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -95,17 +97,26 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 10,
                 ),
                 Padding(
-                  padding: EdgeInsets.all(6),
+                  padding: const EdgeInsets.all(6),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Latset Products',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         AppBarIcons(
-                            function: () {}, icon: IconlyBold.arrowRight2)
+                            function: () {
+                              Navigator.push(
+                                  context,
+                                  PageTransition(
+                                      type: PageTransitionType.leftToRight,
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                      child: const FeedsScreen()));
+                            },
+                            icon: IconlyBold.arrowRight2)
                       ]),
                 ),
                 const SizedBox(
