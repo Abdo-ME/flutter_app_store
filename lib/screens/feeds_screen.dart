@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:store_api_flutter_course/widgets/appbar_icons.dart';
 import 'package:store_api_flutter_course/widgets/feeds_widget.dart';
 
 class FeedsScreen extends StatelessWidget {
@@ -19,9 +17,9 @@ class FeedsScreen extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                mainAxisSpacing: 5,
-                crossAxisSpacing: 5,
-                mainAxisExtent: 270),
+                mainAxisSpacing: 2,
+                crossAxisSpacing: 2,
+                childAspectRatio: 0.7),
             itemBuilder: (_, index) {
               return const FeedWidget();
             }),

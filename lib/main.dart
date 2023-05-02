@@ -19,7 +19,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: lightScaffoldColor,
         primaryColor: lightCardColor,
-        backgroundColor: lightBackgroundColor,
         appBarTheme: AppBarTheme(
           iconTheme: IconThemeData(
             color: lightIconsColor,
@@ -48,10 +47,13 @@ class MyApp extends StatelessWidget {
         //     ),
         cardColor: lightCardColor,
         brightness: Brightness.light,
-        colorScheme: ThemeData().colorScheme.copyWith(
+        colorScheme: ThemeData()
+            .colorScheme
+            .copyWith(
               secondary: lightIconsColor,
               brightness: Brightness.light,
-            ),
+            )
+            .copyWith(background: lightBackgroundColor),
       ),
       home: const HomeScreen(),
     );

@@ -80,8 +80,8 @@ class ProductDetails extends StatelessWidget {
                   );
                 },
                 indicatorLayout: PageIndicatorLayout.COLOR,
-                // autoplay: true,
-                itemCount: 5,
+                autoplay: true,
+                itemCount: 3,
                 pagination: const SwiperPagination(
                     margin: EdgeInsets.all(5),
                     builder: DotSwiperPaginationBuilder(

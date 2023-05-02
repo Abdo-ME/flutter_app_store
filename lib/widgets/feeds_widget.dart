@@ -57,27 +57,23 @@ class FeedWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                // child: FancyShimmerImage(
-                //   height: size.height * 0.2,
-                //   width: double.infinity,
-                //   errorWidget: const Icon(
-                //     IconlyBold.danger,
-                //     color: Colors.red,
-                //     size: 28,
-                //   ),
-                //   imageUrl:
-                //       'https://www.transparentpng.com/download/running-shoes/MQ02nC-running-shoes-hd-image.png',
-                //   boxFit: BoxFit.fill,
-                // ),
-                child: Image.network(
-                    height: size.height * 0.2,
-                    width: double.infinity,
-                    'https://www.transparentpng.com/download/running-shoes/MQ02nC-running-shoes-hd-image.png'),
+                child: FancyShimmerImage(
+                  height: size.height * 0.2,
+                  width: double.infinity,
+                  errorWidget: const Icon(
+                    IconlyBold.danger,
+                    color: Colors.red,
+                    size: 28,
+                  ),
+                  imageUrl:
+                      'https://www.transparentpng.com/download/running-shoes/MQ02nC-running-shoes-hd-image.png',
+                  boxFit: BoxFit.fill,
+                ),
               ),
               const SizedBox(
                 height: 10,

@@ -43,17 +43,15 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Home'),
-          leading: AppBarIcons(function: () {}, icon: IconlyBold.category),
-          actions: [
-            AppBarIcons(
-                function: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Categories()),
-                  );
-                },
-                icon: IconlyBold.user3)
-          ],
+          leading: AppBarIcons(
+              function: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Categories()),
+                );
+              },
+              icon: IconlyBold.category),
+          actions: [AppBarIcons(function: () {}, icon: IconlyBold.user3)],
         ),
         body: SingleChildScrollView(
           child: Padding(
