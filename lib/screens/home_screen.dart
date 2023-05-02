@@ -4,6 +4,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:store_api_flutter_course/consts/global_colors.dart';
 import 'package:store_api_flutter_course/screens/categories_screen.dart';
 import 'package:store_api_flutter_course/screens/feeds_screen.dart';
+import 'package:store_api_flutter_course/screens/users_screen.dart';
 import 'package:store_api_flutter_course/widgets/appbar_icons.dart';
 import 'package:store_api_flutter_course/widgets/feeds_widget.dart';
 import 'package:store_api_flutter_course/widgets/sale_widget.dart';
@@ -51,7 +52,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               },
               icon: IconlyBold.category),
-          actions: [AppBarIcons(function: () {}, icon: IconlyBold.user3)],
+          actions: [
+            AppBarIcons(
+                function: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Users()),
+                  );
+                },
+                icon: IconlyBold.user3)
+          ],
         ),
         body: SingleChildScrollView(
           child: Padding(
