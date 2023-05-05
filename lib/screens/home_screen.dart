@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:store_api_flutter_course/consts/global_colors.dart';
+import 'package:store_api_flutter_course/models/products_model.dart';
 import 'package:store_api_flutter_course/screens/categories_screen.dart';
 import 'package:store_api_flutter_course/screens/feeds_screen.dart';
 import 'package:store_api_flutter_course/screens/users_screen.dart';
+import 'package:store_api_flutter_course/services/api_handler.dart';
 import 'package:store_api_flutter_course/widgets/appbar_icons.dart';
+import 'package:store_api_flutter_course/widgets/feeds_grid_widget.dart';
 import 'package:store_api_flutter_course/widgets/feeds_widget.dart';
 import 'package:store_api_flutter_course/widgets/sale_widget.dart';
 import 'package:page_transition/page_transition.dart';
@@ -30,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // Add dispose to empty the cash from input value after navigate to other screens
   void dispose() {
     _textEditingController.dispose();
+
     super.dispose();
   }
 
@@ -65,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
                 const SizedBox(
@@ -141,19 +145,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                GridView.builder(
-                    itemCount: 4,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 5,
-                            crossAxisSpacing: 5,
-                            mainAxisExtent: 270),
-                    itemBuilder: (_, index) {
-                      return FeedWidget();
-                    })
+                FutureBuilder<List<ProductsModel>>(
+                    future: APIHandler.getAllProducts(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        Center(
+                          child: Text('An error Occoured ${snapshot.error}'),
+                        );
+                      } else if (snapshot.data == null) {
+                        return const Text('No Products');
+                      }
+                      return FeedsGridWidget(productsList: snapshot.data!);
+                    }),
               ],
             ),
           ),

@@ -28,15 +28,15 @@ class SaleWidget extends StatelessWidget {
           Flexible(
             flex: 2,
             child: Padding(
-              padding: EdgeInsets.all(14),
+              padding: const EdgeInsets.all(14),
               child: Container(
                 height: double.infinity,
                 decoration: BoxDecoration(
-                  color: Color(0xFF9699CE),
+                  color: const Color(0xFF9699CE),
                   borderRadius: BorderRadius.circular(18),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8),
                   child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -69,7 +69,7 @@ class SaleWidget extends StatelessWidget {
           Flexible(
               flex: 3,
               child: Padding(
-                padding: EdgeInsets.all(18.0),
+                padding: const EdgeInsets.all(18.0),
                 child: Image.network(
                   width: double.infinity,
                   'https://www.transparentpng.com/download/running-shoes/MQ02nC-running-shoes-hd-image.png',

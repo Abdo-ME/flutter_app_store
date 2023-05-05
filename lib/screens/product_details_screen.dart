@@ -7,12 +7,19 @@ import '../widgets/appbar_icons.dart';
 import '../widgets/sale_widget.dart';
 
 class ProductDetails extends StatelessWidget {
-  const ProductDetails({super.key});
+  const ProductDetails(
+      {super.key,
+      required this.title,
+      required this.price,
+      required this.description,
+      required this.image,
+      required this.category});
 
+  final String title, description, image, category;
+  final int price;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
@@ -24,9 +31,10 @@ class ProductDetails extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Category',
-                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 25),
+                  Text(
+                    category,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w400, fontSize: 25),
                   ),
                   const SizedBox(
                     height: 18,
@@ -34,12 +42,18 @@ class ProductDetails extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'Product one',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 28),
+                      Flexible(
+                        flex: 3,
+                        child: Text(title,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 28,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            maxLines: 1),
                       ),
                       Flexible(
+                        flex: 1,
                         child: RichText(
                           text: TextSpan(
                               text: '\$',
@@ -50,7 +64,7 @@ class ProductDetails extends StatelessWidget {
                               ),
                               children: <TextSpan>[
                                 TextSpan(
-                                  text: '168.00',
+                                  text: price.toString(),
                                   style: TextStyle(
                                       color: lightTextColor,
                                       fontWeight: FontWeight.w500,
@@ -71,11 +85,11 @@ class ProductDetails extends StatelessWidget {
               height: size.height * 0.40,
               child: Swiper(
                 itemBuilder: (context, index) {
-                  return const Image(
+                  return Image(
                     width: double.infinity,
-                    fit: BoxFit.contain,
+                    fit: BoxFit.cover,
                     image: NetworkImage(
-                      'https://www.transparentpng.com/download/running-shoes/MQ02nC-running-shoes-hd-image.png',
+                      image,
                     ),
                   );
                 },
@@ -95,17 +109,18 @@ class ProductDetails extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     'Description',
                     style: TextStyle(fontWeight: FontWeight.w500, fontSize: 28),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 18,
                   ),
                   Text(
-                    'Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 20),
+                    description,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w400, fontSize: 20),
                   )
                 ],
               ),

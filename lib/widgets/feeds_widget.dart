@@ -5,9 +5,17 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:store_api_flutter_course/screens/product_details_screen.dart';
 
-class FeedWidget extends StatelessWidget {
-  const FeedWidget({super.key});
+import '../models/products_model.dart';
 
+class FeedWidget extends StatelessWidget {
+  const FeedWidget(
+      {super.key,
+      required this.title,
+      required this.imgUrl,
+      required this.product});
+  final String title, imgUrl;
+
+  final product;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -25,7 +33,13 @@ class FeedWidget extends StatelessWidget {
               PageTransition(
                   type: PageTransitionType.bottomToTop,
                   duration: const Duration(milliseconds: 300),
-                  child: const ProductDetails()),
+                  child: ProductDetails(
+                    category: product.category.name,
+                    description: product.description,
+                    image: product.images![0],
+                    price: product.price,
+                    title: product.title,
+                  )),
             );
           },
           child: Column(
@@ -45,7 +59,7 @@ class FeedWidget extends StatelessWidget {
                             ),
                             children: <TextSpan>[
                               TextSpan(
-                                text: '168.00',
+                                text: product.price.toString(),
                                 style: TextStyle(
                                     color: lightTextColor,
                                     fontWeight: FontWeight.w600),
@@ -70,8 +84,7 @@ class FeedWidget extends StatelessWidget {
                     color: Colors.red,
                     size: 28,
                   ),
-                  imageUrl:
-                      'https://www.transparentpng.com/download/running-shoes/MQ02nC-running-shoes-hd-image.png',
+                  imageUrl: imgUrl,
                   boxFit: BoxFit.fill,
                 ),
               ),
@@ -81,10 +94,14 @@ class FeedWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'Title',
+                  title,
                   overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
+                  maxLines: 1,
+                  style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ),
               SizedBox(
