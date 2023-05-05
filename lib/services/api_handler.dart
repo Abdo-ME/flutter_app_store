@@ -15,7 +15,6 @@ class APIHandler {
     for (var product in data) {
       tempProducts.add(product);
     }
-
     return ProductsModel.productsFromSnapshot(tempProducts);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 import 'package:store_api_flutter_course/consts/global_colors.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
@@ -8,18 +9,12 @@ import 'package:store_api_flutter_course/screens/product_details_screen.dart';
 import '../models/products_model.dart';
 
 class FeedWidget extends StatelessWidget {
-  const FeedWidget(
-      {super.key,
-      required this.title,
-      required this.imgUrl,
-      required this.product});
-  final String title, imgUrl;
+  const FeedWidget({super.key});
 
-  final product;
   @override
   Widget build(BuildContext context) {
+    final ProductsModel productsProvider = Provider.of<ProductsModel>(context);
     Size size = MediaQuery.of(context).size;
-
     return Padding(
       padding: const EdgeInsets.all(2.0),
       child: Material(
@@ -33,13 +28,7 @@ class FeedWidget extends StatelessWidget {
               PageTransition(
                   type: PageTransitionType.bottomToTop,
                   duration: const Duration(milliseconds: 300),
-                  child: ProductDetails(
-                    category: product.category.name,
-                    description: product.description,
-                    image: product.images![0],
-                    price: product.price,
-                    title: product.title,
-                  )),
+                  child: const ProductDetails()),
             );
           },
           child: Column(
@@ -59,7 +48,7 @@ class FeedWidget extends StatelessWidget {
                             ),
                             children: <TextSpan>[
                               TextSpan(
-                                text: product.price.toString(),
+                                text: productsProvider.price.toString(),
                                 style: TextStyle(
                                     color: lightTextColor,
                                     fontWeight: FontWeight.w600),
@@ -84,7 +73,7 @@ class FeedWidget extends StatelessWidget {
                     color: Colors.red,
                     size: 28,
                   ),
-                  imageUrl: imgUrl,
+                  imageUrl: productsProvider.images![0],
                   boxFit: BoxFit.fill,
                 ),
               ),
@@ -94,7 +83,7 @@ class FeedWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  title,
+                  productsProvider.title.toString(),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   style: const TextStyle(
