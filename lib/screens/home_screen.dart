@@ -159,7 +159,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       } else if (snapshot.data == null) {
                         return const Text('No Products');
                       }
-                      return FeedsGridWidget(productsList: snapshot.data!);
+                      return FeedsGridWidget(
+                        productsList: snapshot.data!,
+                        count: 3,
+                      );
                     }),
               ],
             ),

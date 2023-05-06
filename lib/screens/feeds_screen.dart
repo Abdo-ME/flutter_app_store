@@ -35,40 +35,14 @@ class _FeedsScreenState extends State<FeedsScreen> {
         title: const Text('All products'),
       ),
       body: SingleChildScrollView(
-        child:
-            //  FutureBuilder<List<ProductsModel>>(
-            //     future: APIHandler.getAllProducts(),
-            //     builder: (context, snapshot) {
-            //       if (snapshot.connectionState == ConnectionState.waiting) {
-            //         return const Center(
-            //           child: CircularProgressIndicator(),
-            //         );
-            //       } else if (snapshot.hasError) {
-            //         Center(
-            //           child: Text('An error Occoured ${snapshot.error}'),
-            //         );
-            //       } else if (snapshot.data == null) {
-            //         return const Text('No Products');
-            //       }
-            //       return FeedWidget();
-            //     }),
-
-            GridView.builder(
-                itemCount: productList.length,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 2,
-                    crossAxisSpacing: 2,
-                    childAspectRatio: 0.7),
-                itemBuilder: (_, index) {
-                  return ChangeNotifierProvider.value(
-                    value: productList[index],
-                    child: const FeedWidget(),
-                  );
-                }),
-      ),
+          child: productList.isEmpty
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : FeedsGridWidget(
+                  productsList: productList,
+                  count: productList.length,
+                )),
     );
   }
 }

@@ -4,12 +4,14 @@ import 'package:store_api_flutter_course/models/products_model.dart';
 import 'package:store_api_flutter_course/widgets/feeds_widget.dart';
 
 class FeedsGridWidget extends StatelessWidget {
-  const FeedsGridWidget({super.key, required this.productsList});
+  const FeedsGridWidget(
+      {super.key, required this.productsList, required this.count});
   final List<ProductsModel> productsList;
+  final int count;
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-        itemCount: productsList.length,
+        itemCount: count,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
