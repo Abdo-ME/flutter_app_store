@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:provider/provider.dart';
 import 'package:store_api_flutter_course/consts/global_colors.dart';
+import 'package:store_api_flutter_course/models/categories_model.dart';
 import 'package:store_api_flutter_course/models/products_model.dart';
 import 'package:store_api_flutter_course/screens/categories_screen.dart';
 import 'package:store_api_flutter_course/screens/feeds_screen.dart';
@@ -22,6 +24,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late TextEditingController _textEditingController;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -36,6 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
     super.dispose();
   }
+
+  // final List<CategoriesModel> categoriesModelList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   context,
                   MaterialPageRoute(builder: (context) => const Categories()),
                 );
+                // const Categories()),
+                // );
               },
               icon: IconlyBold.category),
           actions: [
@@ -149,8 +156,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     future: APIHandler.getAllProducts(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
+                        return SizedBox(
+                          // width: double.infinity,
+                          height: MediaQuery.of(context).size.height * 0.5,
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
                         );
                       } else if (snapshot.hasError) {
                         Center(
