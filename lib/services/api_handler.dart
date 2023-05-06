@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:store_api_flutter_course/models/categories_model.dart';
+import 'package:store_api_flutter_course/models/users_model.dart';
 
 import '../consts/api_consts.dart';
 import '../models/products_model.dart';
@@ -29,5 +30,11 @@ class APIHandler {
     List tempGategories = [];
     tempGategories = await getData(target: 'categories');
     return CategoriesModel.productsFromSnapshot(tempGategories);
+  }
+
+  static Future<List<UsersModel>> getUsers() async {
+    List tempusers = [];
+    tempusers = await getData(target: 'users');
+    return UsersModel.usersFromSnapshot(tempusers);
   }
 }
