@@ -7,16 +7,21 @@ import '../widgets/appbar_icons.dart';
 import '../widgets/sale_widget.dart';
 
 class ProductDetails extends StatelessWidget {
-  const ProductDetails({super.key});
+  const ProductDetails(
+      {super.key,
+      required this.title,
+      required this.description,
+      required this.category,
+      required this.image,
+      required this.price});
 
+  final String title;
+  final String description;
+  final String category;
+  final String image;
+  final String price;
   @override
   Widget build(BuildContext context) {
-    String title = 'title';
-    String description = 'description';
-    String category = 'category';
-    String image = 'image';
-    int price = 123;
-
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(),
