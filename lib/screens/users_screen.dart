@@ -34,7 +34,7 @@ class Users extends StatelessWidget {
               return const Text('No Users');
             }
             return ListView.builder(
-                itemCount: 10,
+                itemCount: snapshot.data!.length,
                 itemBuilder: (_, index) {
                   return ChangeNotifierProvider.value(
                     value: snapshot.data![index],

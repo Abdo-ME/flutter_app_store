@@ -29,11 +29,7 @@ class FeedWidget extends StatelessWidget {
                   type: PageTransitionType.bottomToTop,
                   duration: const Duration(milliseconds: 300),
                   child: ProductDetails(
-                    category: productsProvider.category.toString(),
-                    description: productsProvider.description.toString(),
-                    image: productsProvider.images![0].toString(),
-                    price: productsProvider.price.toString(),
-                    title: productsProvider.title.toString(),
+                    id: productsProvider.id.toString(),
                   )),
             );
           },

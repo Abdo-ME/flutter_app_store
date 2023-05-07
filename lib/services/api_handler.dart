@@ -37,4 +37,12 @@ class APIHandler {
     tempusers = await getData(target: 'users');
     return UsersModel.usersFromSnapshot(tempusers);
   }
+
+  static Future<ProductsModel> getProductByID({required String id}) async {
+    var uri = Uri.https(BaseURL, 'api/v1/products/$id');
+    final response = await http.get(uri);
+    var data = jsonDecode(response.body);
+
+    return ProductsModel.fromJson(data);
+  }
 }

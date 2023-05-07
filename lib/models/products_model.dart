@@ -34,4 +34,10 @@ class ProductsModel with ChangeNotifier {
       return ProductsModel.fromJson(product);
     }).toList();
   }
+
+  static ProductsModel productFromSnapshot(product) {
+    return ProductsModel.fromJson(product);
+    // return product.map((product) {
+    // }).toList();
+  }
 }
