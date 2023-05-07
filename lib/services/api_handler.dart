@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -10,14 +11,23 @@ import '../models/products_model.dart';
 
 class APIHandler {
   static Future<List<dynamic>> getData({required String target}) async {
-    var uri = Uri.https(BaseURL, 'api/v1/$target');
-    final response = await http.get(uri);
-    var data = jsonDecode(response.body);
-    List tempdata = [];
-    for (var product in data) {
-      tempdata.add(product);
+    try {
+      var uri = Uri.https(BaseURL, 'api/v1/$target');
+      final response = await http.get(uri);
+      var data = jsonDecode(response.body);
+      List tempdata = [];
+      if (response.statusCode != 200) {
+        throw data['message'];
+      }
+
+      for (var product in data) {
+        tempdata.add(product);
+      }
+      return tempdata;
+    } catch (error) {
+      print("en error while getting products : $error");
+      throw error.toString();
     }
-    return tempdata;
   }
 
   static Future<List<ProductsModel>> getAllProducts() async {
@@ -39,10 +49,17 @@ class APIHandler {
   }
 
   static Future<ProductsModel> getProductByID({required String id}) async {
-    var uri = Uri.https(BaseURL, 'api/v1/products/$id');
-    final response = await http.get(uri);
-    var data = jsonDecode(response.body);
+    try {
+      var uri = Uri.https(BaseURL, 'api/v1/products/$id');
+      final response = await http.get(uri);
+      var data = jsonDecode(response.body);
+      if (response.statusCode != 200) {
+        throw data['message'];
+      }
 
-    return ProductsModel.fromJson(data);
+      return ProductsModel.fromJson(data);
+    } catch (error) {
+      throw error.toString();
+    }
   }
 }
