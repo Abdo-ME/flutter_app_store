@@ -133,7 +133,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               },
                               indicatorLayout: PageIndicatorLayout.COLOR,
                               autoplay: true,
-                              itemCount: 3,
+                              itemCount: product!.images!.length,
                               pagination: const SwiperPagination(
                                   margin: EdgeInsets.all(5),
                                   builder: DotSwiperPaginationBuilder(

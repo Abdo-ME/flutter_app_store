@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:store_api_flutter_course/services/api_handler.dart';
-import 'package:store_api_flutter_course/widgets/feeds_grid_widget.dart';
 
 import '../models/products_model.dart';
+import '../widgets/feeds_widget.dart';
 
 class FeedsScreen extends StatefulWidget {
   const FeedsScreen({super.key});
@@ -12,43 +13,84 @@ class FeedsScreen extends StatefulWidget {
 }
 
 class _FeedsScreenState extends State<FeedsScreen> {
-  late int count;
-  late List<ProductsModel> productsList;
+  final ScrollController _scrollController = ScrollController();
+  List<ProductsModel> productsList = [];
+  int _limit = 10;
+  bool _isLimit = false;
+  @override
+  void initState() {
+    getAllProducts();
+    super.initState();
+  }
+
+  Future<void> getAllProducts() async {
+    productsList = await APIHandler.getAllProducts(limit: _limit.toString());
+    setState(() {});
+  }
+
+  @override
+  void didChangeDependencies() {
+    _scrollController.addListener(() async {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        _limit += 10;
+        if (_limit >= 200) {
+          _isLimit = true;
+          setState(() {});
+          return;
+        }
+        await getAllProducts();
+      }
+    });
+
+    super.didChangeDependencies();
+  }
+
+  @override
+  // Add dispose to empty the cash from input value after navigate to other screens
+  void dispose() {
+    _scrollController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('All products'),
       ),
-      body: SingleChildScrollView(
-        child: futureWidget(),
-      ),
-    );
-  }
-
-  FutureBuilder<List<ProductsModel>> futureWidget() {
-    return FutureBuilder<List<ProductsModel>>(
-        future: APIHandler.getAllProducts(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return SizedBox(
-              // width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.7,
-              child: const Center(
-                child: CircularProgressIndicator(),
+      body: productsList.isEmpty
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : SingleChildScrollView(
+              controller: _scrollController,
+              child: Column(
+                children: [
+                  GridView.builder(
+                      itemCount: productsList.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 5,
+                              crossAxisSpacing: 5,
+                              mainAxisExtent: 270),
+                      itemBuilder: (_, index) {
+                        return ChangeNotifierProvider.value(
+                          value: productsList[index],
+                          child: const FeedWidget(),
+                        );
+                      }),
+                  if (!_isLimit)
+                    const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                ],
               ),
-            );
-          } else if (snapshot.hasError) {
-            Center(
-              child: Text('An error Occoured ${snapshot.error}'),
-            );
-          } else if (snapshot.data == null) {
-            return const Text('No Products');
-          }
-          return FeedsGridWidget(
-            productsList: snapshot.data!,
-            count: snapshot.data!.length,
-          );
-        });
+            ),
+    );
   }
 }

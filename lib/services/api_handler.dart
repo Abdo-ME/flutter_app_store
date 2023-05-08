@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 import 'package:store_api_flutter_course/models/categories_model.dart';
 import 'package:store_api_flutter_course/models/users_model.dart';
@@ -10,9 +10,11 @@ import '../consts/api_consts.dart';
 import '../models/products_model.dart';
 
 class APIHandler {
-  static Future<List<dynamic>> getData({required String target}) async {
+  static Future<List<dynamic>> getData(
+      {required String target, String? limit}) async {
     try {
-      var uri = Uri.https(BaseURL, 'api/v1/$target');
+      var uri = Uri.https(BaseURL, 'api/v1/$target',
+          target == 'products' ? {'offset': '0', 'limit': limit} : {});
       final response = await http.get(uri);
       var data = jsonDecode(response.body);
       List tempdata = [];
@@ -30,9 +32,10 @@ class APIHandler {
     }
   }
 
-  static Future<List<ProductsModel>> getAllProducts() async {
+  static Future<List<ProductsModel>> getAllProducts(
+      {required String limit}) async {
     List tempProducts = [];
-    tempProducts = await getData(target: 'products');
+    tempProducts = await getData(target: 'products', limit: limit);
     return ProductsModel.productsFromSnapshot(tempProducts);
   }
 

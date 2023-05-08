@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:provider/provider.dart';
 import 'package:store_api_flutter_course/consts/global_colors.dart';
-import 'package:store_api_flutter_course/models/categories_model.dart';
 import 'package:store_api_flutter_course/models/products_model.dart';
 import 'package:store_api_flutter_course/screens/categories_screen.dart';
 import 'package:store_api_flutter_course/screens/feeds_screen.dart';
@@ -149,13 +147,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 10,
                 ),
                 FutureBuilder<List<ProductsModel>>(
-                    future: APIHandler.getAllProducts(),
+                    future: APIHandler.getAllProducts(limit: '4'),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return SizedBox(
                           // width: double.infinity,
                           height: MediaQuery.of(context).size.height * 0.5,
-                          child: Center(
+                          child: const Center(
                             child: CircularProgressIndicator(),
                           ),
                         );
@@ -168,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
                       return FeedsGridWidget(
                         productsList: snapshot.data!,
-                        count: 3,
+                        count: 4,
                       );
                     }),
               ],
